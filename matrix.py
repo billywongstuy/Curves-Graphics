@@ -25,7 +25,7 @@ def make_hermite():
     t[2][1] = -2
     t[2][2] = 1
     t[3][0] = 1
-    t[3][1] = 1
+    t[3][1] = -1
     return t
 
 def generate_curve_coefs( p1, p2, p3, p4, t ):
@@ -104,13 +104,6 @@ def scalar_mult( matrix, s ):
             
 #m1 * m2 -> m2
 def matrix_mult( m1, m2 ):
-
-    '''
-    print 'm1'
-    print_matrix(m1)
-    print 'm2'
-    print_matrix(m2)
-    '''
 
     point = 0
     for row in m2:

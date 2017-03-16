@@ -5,13 +5,17 @@ import math
 
 
 def add_circle( points, cx, cy, cz, r, step ):
-    t = 0
-    while t < 1:
+    t = step
+    x_p = cx+r*math.cos(0)
+    y_p = cy+r*math.sin(0)
+    while t <= 1+step:
         theta = (t)*2*math.pi
         x = cx+r*math.cos(theta)
         y = cy+r*math.sin(theta)
         z = 0
-        add_point(points, x, y, z)
+        add_edge(points, x_p, y_p, z, x, y, z)
+        x_p = x
+        y_p = y
         t += step
         
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
@@ -22,28 +26,33 @@ def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
 
 
 def add_hermite_curve( points, x0, y0, x1, y1, rx0, ry0, rx1, ry1, step ):
-    print 'hello'
+    x_p = x0
+    y_p = y0
     x_co = generate_curve_coefs( x0, x1, rx0, rx1, 'hermite' )
     y_co = generate_curve_coefs( y0, y1, ry0, ry1, 'hermite' )
-    print x_co
-    print y_co
-    t = 0
-    while t < 1:
+    t = step
+    while t <= 1+step:
         x = x_co[0]*(t**3)+x_co[1]*(t**2)+x_co[2]*(t)+x_co[3]
         y = y_co[0]*(t**3)+y_co[1]*(t**2)+y_co[2]*(t)+y_co[3]
         z = 0
+        add_edge(points, x_p, y_p, z, x, y, z)
+        x_p = x
+        y_p = y
         t += step
-    
     
 def add_bezier_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step ):
     x_co = generate_curve_coefs( x0, x1, x2, x3, 'bezier' )
     y_co = generate_curve_coefs( y0, y1, y2, y3, 'bezier' )
-    t = 0
-    while t < 1:
+    x_p = x0
+    y_p = y0
+    t = step
+    while t <= 1+step:
         x = x_co[0]*(t**3)+x_co[1]*(t**2)+x_co[2]*(t)+x_co[3]
         y = y_co[0]*(t**3)+y_co[1]*(t**2)+y_co[2]*(t)+y_co[3]
         z = 0
-        add_point(points, x, y, z)
+        add_edge(points, x_p, y_p, z, x, y, z)
+        x_p = x
+        y_p = y
         t += step
     
 def draw_lines( matrix, screen, color ):
