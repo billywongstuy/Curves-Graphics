@@ -36,6 +36,7 @@ def generate_curve_coefs( p1, p2, p3, p4, t ):
         matrix_mult(make_hermite(),temp)
     if t == 'bezier':
         matrix_mult(make_bezier(),temp)
+    
     return temp[0]
 
 def make_translate( x, y, z ):
